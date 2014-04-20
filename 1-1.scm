@@ -26,27 +26,27 @@
 ; #f
 
 (if (and (> b a) (< b (* a b)))
-	b
-	a)
+  b
+  a)
 ; (if (and true true) 4 3) -> 4
 
 (cond ((= a 4) 6)
-			((= b 4) (+ 6 7 a))
-			(else 25))
+      ((= b 4) (+ 6 7 a))
+      (else 25))
 ; (cond (false 6)
-; 			(true 16)
-; 			(else 25)) -> 16
+;       (true 16)
+;       (else 25)) -> 16
 
 (+ 2 (if (> b a) b a))
 ; (+ 2 4) -> 6
 
 (* (cond ((> a b) a)
-				 ((< a b) b)
-				 (else -1))
-	 (+ a 1))
+         ((< a b) b)
+         (else -1))
+   (+ a 1))
 ; (* (cond (false 3)
-; 				 (true 4)
-; 				 (else -1))
-; 	 4)
+;          (true 4)
+;          (else -1))
+;    4)
 ; -> (* 4 4) -> 16
 
