@@ -17,6 +17,9 @@
 (define (sum term a next b)
   (define (add x y) (+ x y))
   (accumulate add 0 term a next b))
+(define (sum2 term a next b)
+  (define (add x y) (+ x y))
+  (accumulate2 add 0 term a next b))
 
 ; はい。
 
@@ -24,4 +27,5 @@
 (define (inc x) (+ x 1))
 
 (sum ident 0 inc 10)
+(sum2 ident 0 inc 10)
 
