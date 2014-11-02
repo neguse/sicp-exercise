@@ -47,12 +47,11 @@
 ; wsub = (width (sub-interval x y))
 ;      = (width (make-interval (- (lower-bound x) (upper-bound y)) (- (upper-bound x) (lower-bound y))))
 ;      = (/ (- (- (upper-bound x) (lower-bound y)) (- (lower-bound x) (upper-bound y))) 2)
-;      = (/ (+ (- (upper-bound x) (lower-bound x)) (- (upper-bound y) (lower-bound y))) 2)
-;      = (/ (+ (* (width x) 2) (* (width y) 2)) 2)
-;      = (+ (width x) (width y))
+;      = (/ (+ (- (upper-bound x) (lower-bound x)) (- (- (upper-bound y) (lower-bound y)))) 2)
+;      = (/ (- (* (width x) 2) (* (width y) 2)) 2)
+;      = (- (width x) (width y))
 ;
-; ということで、wadd = wsub = (+ (width x) (width y)) らしいです。
-; ははあ
+; ということで、addとsubについてはwidthから一意に求まることが示せた。
 
 ; 積と商については、例を出せって言われても、どうすればいいんでしょうか。
-; なんとなく、lower-boundとupper-boundの符号が違うと、計算結果がwidthと関係なくなりそう
+; なんとなく、lower-boundとupper-boundの符号が違うと、計算結果がwidthと関係なくなりそう。
