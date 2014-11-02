@@ -1,8 +1,8 @@
 #lang racket
 
 (define (make-interval a b) (cons a b))
-(define (upper-bound x) (car x))
-(define (lower-bound x) (cdr x))
+(define (lower-bound x) (car x))
+(define (upper-bound x) (cdr x))
 
 (define (add-interval x y)
   (make-interval (+ (lower-bound x) (lower-bound y))
@@ -21,6 +21,6 @@
                 (make-interval (/ 1.0 (upper-bound y))
                                (/ 1.0 (lower-bound y)))))
 
-(= (upper-bound (make-interval 1 2)) 1)
-(= (lower-bound (make-interval 1 2)) 2)
+(= (lower-bound (make-interval 1 2)) 1)
+(= (upper-bound (make-interval 1 2)) 2)
 
