@@ -5,7 +5,7 @@
 
 (define (test-is x y)
   (set! test-num (+ 1 test-num))
-  (if (= x y)
+  (if (eq? x y)
 	(begin
 	  (set! test-success (+ 1 test-success))
 	  (list 'ok test-num))
