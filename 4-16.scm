@@ -60,9 +60,6 @@
 ;;;SECTION 4.1.1
 
 (define (myeval exp env)
-  ; (display 'myeval)
-  ; (display exp)
-  ; (newline)
   (cond ((self-evaluating? exp) exp)
         ((variable? exp) (lookup-variable-value exp env))
         ((quoted? exp) (text-of-quotation exp))
@@ -75,10 +72,6 @@
 		  (error "Unknown expression type -- EVAL" exp))))
 
 (define (myapply procedure arguments)
-  ; (display 'myapply)
-  ; (display procedure)
-  ; (display arguments)
-  ; (newline)
   (cond ((primitive-procedure? procedure)
          (apply-primitive-procedure procedure arguments))
         ((compound-procedure? procedure)
@@ -305,7 +298,7 @@
 (define (make-frame variables values)
   (if
 	(and (null? variables) (null? values))
-	'((end-of-frame))
+	(list (list 'end-of-frame))
 	(cons
 	  (cons (car variables) (car values))
 	  (make-frame (cdr variables) (cdr values)))))
@@ -737,14 +730,20 @@
 			   false
 			   (even? (- n 1))))
 		   (even? x)) the-global-environment)
-(test-is
-  (myeval '(iseven 0) the-global-environment) 'false)
+(test-is (myeval '(iseven 0) the-global-environment) '#t)
+(test-is (myeval '(iseven 1) the-global-environment) '#f)
+(test-is (myeval '(iseven 2) the-global-environment) '#t)
+(test-is (myeval '(iseven 3) the-global-environment) '#f)
 
 (test-done)
 
 ; (driver-loop)
 
-; おしいところまでは来たんだけど、引数が'()になってしまってる…
+; やっとうごいた…
+; 'end-of-frameのところ、quoteされた値をそのまま返すようにしてたんだけど、
+; これだと呼び出しのたびに同じアドレスの値を返してしまうので、set-car!とかした時におかしくなってしまう
+; list関数を使って、毎回異なるconsを返すようにしたところ意図した動きになった。
+; うーん、こういうのあるから破壊的操作したくないんだよなぁ。
 
 ; たぶん、make-procedureに入れたほうがいいんだろうなぁという気がする。
 ; これは、getterで変換するとその度に変換が走るので非効率になりそうという理由から。
