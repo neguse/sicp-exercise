@@ -11,11 +11,19 @@
 	  (list 'ok test-num))
 	(error "failed test-is" x y)))
 
+(define (test-isequal x y)
+  (set! test-num (+ 1 test-num))
+  (if (equal? x y)
+	(begin
+	  (set! test-success (+ 1 test-success))
+	  (list 'ok test-num))
+	(error "failed test-isequal" x y)))
+
 (define (test-done)
   (if (= test-num test-success)
 	'all-ok
 	(error "failed some tests" test-num test-success)))
 
 
-(provide test-is test-done)
+(provide test-is test-isequal test-done)
 
