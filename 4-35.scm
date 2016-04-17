@@ -432,6 +432,11 @@
 ;;  support for Prime?); integer? and sqrt for exercise code;
 ;;  eq? for ex. solution
 
+(define (myor a b)
+  (or a b))
+(define (myand a b)
+  (and a b))
+
 (define primitive-procedures
   (list (list 'car car)
         (list 'cdr cdr)
@@ -454,6 +459,9 @@
         (list 'integer? integer?)
         (list 'sqrt sqrt)
         (list 'eq? eq?)
+        (list 'or myor)
+        (list 'and myand)
+        (list 'display display)
 ;;      more primitives
         ))
 
