@@ -14,7 +14,7 @@
 	the-empty-stream
 	(cons-stream (car l) (list->stream (cdr l)))))
 
-(define user-initial-environment interaction-environment)
+(define user-initial-environment (scheme-report-environment 5))
 
 ;;;;QUERY SYSTEM FROM SECTION 4.4.4 OF
 ;;;; STRUCTURE AND INTERPRETATION OF COMPUTER PROGRAMS
@@ -566,8 +566,6 @@
 
 (define (initialize-data-base rules-and-assertions)
   (define (deal-out r-and-a rules assertions)
-  (display assertions)
-  (newline)
     (cond ((null? r-and-a)
            (set! THE-ASSERTIONS (list->stream assertions))
            (set! THE-RULES (list->stream rules))
