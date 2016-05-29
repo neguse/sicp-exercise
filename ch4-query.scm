@@ -149,6 +149,31 @@
 
 ;;(put 'always-true 'qeval always-true)
 
+(define (uniquely-contents operands) (car operands))
+
+(define (stream-unique? s)
+  (cond
+	((stream-null? s) #f)
+	((stream-null? (stream-cdr s)) #t)
+	(else #f)))
+
+(define (uniquely-asserted operands frame-stream)
+  (define (stream-singleton? s)
+	(cond
+	  ((stream-null? s) #f)
+	  ((stream-null? (stream-cdr s)) #t)
+	  (else #f)))
+  (stream-flatmap
+   (lambda (frame)
+	 (let ((q
+			 (qeval (uniquely-contents operands) (singleton-stream frame))))
+	   (if (stream-singleton? q)
+		 q
+		 the-empty-stream)))
+   frame-stream))
+
+;;(put 'unique 'qeval uniquely-asserted)
+
 ;;;SECTION 4.4.4.3
 ;;;Finding Assertions by Pattern Matching
 
@@ -590,6 +615,7 @@
   (put 'not 'qeval negate)
   (put 'lisp-value 'qeval lisp-value)
   (put 'always-true 'qeval always-true)
+  (put 'unique 'qeval uniquely-asserted)
   (deal-out rules-and-assertions '() '()))
 
 ;; Do following to reinit the data base from microshaft-data-base
