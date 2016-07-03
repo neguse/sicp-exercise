@@ -1,0 +1,32 @@
+
+ラベル通過するときの状態を書く
+
+fact (3)
+
+fact-loop: n=3 continue=fact-done stack=[]
+fact-loop: n=2 continue=after-fact stack=[3,fact-done]
+fact-loop: n=1 continue=after-fact stack=[2,after-fact,3,fact-done]
+base-case: n=1 continue=after-fact stack=[2,after-fact,3,fact-done]
+after-fact: n=1 val=1 continue=after-fact stack=[2,after-fact,3,fact-done]
+after-fact: n=2 val=2 continue=after-fact stack=[3,fact-done]
+fact-done: n=3 val=6 continue=fact-done stack=[]
+
+fib(3)
+
+fib-loop:			n=3 continue=fib-done stack=[]
+fib-loop:			n=2 continue=afterfib-n-1 stack=[3,fib-done]
+fib-loop:			n=1 continue=afterfib-n-1 stack=[2,afterfib-n-1,3,fib-done]
+immediate-answer:	n=1 continue=afterfib-n-1 stack=[2,afterfib-n-1,3,fib-done]
+afterfib-n-1:		n=1 val=1 continue=afterfib-n-1 stack=[2,afterfib-n-1,3,fib-done]
+fib-loop:			n=0 val=1 continue=afterfib-n-2 stack=[1,afterfib-n-1,3,fib-done]
+immediate-answer:	n=0 val=1 continue=afterfib-n-2 stack=[1,afterfib-n-1,3,fib-done]
+afterfib-n-2:		n=0 val=0 continue=afterfib-n-2 stack=[1,afterfib-n-1,3,fib-done]
+afterfib-n-1:		n=0 val=1 continue=afterfib-n-1 stack=[3,fib-done]
+fib-loop:			n=1 val=1 continue=afterfib-n-2 stack=[1,fib-done]
+immediate-answer:	n=1 val=1 continue=afterfib-n-2 stack=[1,fib-done]
+afterfib-n-2:		n=1 val=1 continue=afterfib-n-2 stack=[1,fib-done]
+fib-done:			n=1 val=2 continue=fib-done stack=[]
+
+はい。
+fibは、afterfib-n-1とafterfib-n-2とでsave, restoreするレジスタが違うのが難しい。
+
