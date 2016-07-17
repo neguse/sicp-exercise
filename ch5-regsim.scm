@@ -374,6 +374,16 @@
 		   (lambda () (get-contents r))))
 		(else
 		  (error "Unknown expression type -- ASSEMBLE" exp))))
+(define (make-operation-primitive-exp exp machine labels)
+  (cond ((constant-exp? exp)
+		 (let ((c (constant-exp-value exp)))
+		   (lambda () c)))
+		((register-exp? exp)
+		 (let ((r (get-register machine
+								(register-exp-reg exp))))
+		   (lambda () (get-contents r))))
+		(else
+		  (error "Unknown expression type -- ASSEMBLE" exp))))
 
 (define (register-exp? exp) (tagged-list? exp 'reg))
 
@@ -392,7 +402,7 @@
   (let ((op (lookup-prim (operation-exp-op exp) operations))
 		(aprocs
 		  (map (lambda (e)
-				 (make-primitive-exp e machine labels))
+				 (make-operation-primitive-exp e machine labels))
 			   (operation-exp-operands exp))))
 	(lambda ()
 	  (apply op (map (lambda (p) (p)) aprocs)))))
