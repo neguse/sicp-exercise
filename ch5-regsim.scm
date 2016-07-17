@@ -243,6 +243,8 @@
 		 (make-assign inst machine labels ops pc))
 		((eq? (car inst) 'test)
 		 (make-test inst machine labels ops flag pc))
+		((eq? (car inst) 'ntest)
+		 (make-ntest inst machine labels ops flag pc))
 		((eq? (car inst) 'branch)
 		 (make-branch inst machine labels flag pc))
 		((eq? (car inst) 'goto)
@@ -288,6 +290,16 @@
 				condition machine labels operations)))
 		(lambda ()
 		  (set-contents! flag (condition-proc))
+		  (advance-pc pc)))
+	  (error "Bad TEST instruction -- ASSEMBLE" inst))))
+(define (make-ntest inst machine labels operations flag pc)
+  (let ((condition (test-condition inst)))
+	(if (operation-exp? condition)
+	  (let ((condition-proc
+			  (make-operation-exp
+				condition machine labels operations)))
+		(lambda ()
+		  (set-contents! flag (not (condition-proc)))
 		  (advance-pc pc)))
 	  (error "Bad TEST instruction -- ASSEMBLE" inst))))
 
